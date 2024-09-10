@@ -1,14 +1,17 @@
-We're writing this guide because the official Google guide is missing a few important steps, linked below:
+# We're writing this guide because the official Google guide is missing a few important steps, linked below:
 
-[Authenticate with Firebase in a Chrome extension](https://firebase.google.com/docs/auth/web/chrome-extension)
+[Official Google guide - Authenticate with Firebase in a Chrome extension](https://firebase.google.com/docs/auth/web/chrome-extension)
 
-This will work on any operating system. For the purposes of this guide we'll be using Mac OS
+[Dev.to Guide](https://dev.to/lvn1/google-authentication-in-a-chrome-extension-with-firebase-2bmo)
 
-Your can clone our repo here or start from scratch by following the tutorial below
+You can clone the repo here or start from scratch by following the tutorial below.
 
 [Github repo](https://github.com/lvn1/chrome-extension-firebase-auth)
 
+## If you find this guide helpful please give us a star :)
+
 ## Prerequisites
+This will work on any operating system. For the purposes of this guide we'll be using Mac OS
 
 - Google Chrome browser
 - A Google account (Will be linked to Firebase and Chrome Web Store)
@@ -408,4 +411,7 @@ Check the console logs in the popup, background script, and offscreen document f
 You now have a Chrome extension that uses Firebase Authentication with an offscreen document to handle the sign-in process. This setup allows for secure authentication without exposing sensitive Firebase configuration details directly in the extension code.
 
 Remember to replace placeholder values (like YOUR_EXTENSION_ID, YOUR-CLIENT-ID, YOUR_PUBLIC_KEY, and your-project-id) with your actual values before publishing your extension.
+
+If you found this guide helpful please give us a star and follow us on Dev.to for more guides
+[Dev.to](https://dev.to/lvn1)
 
