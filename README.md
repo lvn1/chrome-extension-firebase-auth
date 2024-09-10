@@ -1,14 +1,14 @@
-# We're writing this guide because the official Google guide is missing a few important steps, linked below:
+# We're writing this guide because the official one by Google is missing a few important steps, linked below:
 
-[Official Google guide - Authenticate with Firebase in a Chrome extension](https://firebase.google.com/docs/auth/web/chrome-extension)
+Official Google guide: [Authenticate with Firebase in a Chrome extension](https://firebase.google.com/docs/auth/web/chrome-extension)
 
-[Dev.to Guide](https://dev.to/lvn1/google-authentication-in-a-chrome-extension-with-firebase-2bmo)
+Our guide: [Dev.to Guide](https://dev.to/lvn1/google-authentication-in-a-chrome-extension-with-firebase-2bmo)
 
 You can clone the repo here or start from scratch by following the tutorial below.
 
 [Github repo](https://github.com/lvn1/chrome-extension-firebase-auth)
 
-## If you find this guide helpful please give us a star :)
+## If you find this guide or repo helpful, please star it:)
 
 ## Prerequisites
 This will work on any operating system. For the purposes of this guide we'll be using Mac OS
