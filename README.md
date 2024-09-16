@@ -1,16 +1,16 @@
-# We're writing this guide because the official one by Google is missing a few important steps, linked below:
+#### We're writing this guide because the official one by Google is missing a few important steps, linked below:
 
-Official Google guide: [Authenticate with Firebase in a Chrome extension](https://firebase.google.com/docs/auth/web/chrome-extension)
+**Official Google guide:** [Authenticate with Firebase in a Chrome extension](https://firebase.google.com/docs/auth/web/chrome-extension)
 
-Our guide: [Dev.to](https://dev.to/lvn1/google-authentication-in-a-chrome-extension-with-firebase-2bmo)
+**Our guide:** [Dev.to](https://dev.to/lvn1/google-authentication-in-a-chrome-extension-with-firebase-2bmo)
 
 You can clone the repo here or start from scratch by following the tutorial below.
 
 [Github repo](https://github.com/lvn1/chrome-extension-firebase-auth)
 
-## If you find this guide or repo helpful, please star it:)
+#### If you find this guide or repo helpful, please star it:)
 
-## Prerequisites
+### Prerequisites
 This will work on any operating system. For the purposes of this guide we'll be using Mac OS
 
 - Google Chrome browser
@@ -18,7 +18,7 @@ This will work on any operating system. For the purposes of this guide we'll be 
 - A Chrome web store developer account ($5 one time fee)
 - Node.js and npm installed (Latest or LTS version)
 
-## Step 1: Create the Project Structure
+### Step 1: Create the Project Structure
 **a)** Create a new directory for your project: 
 
 ```
@@ -33,7 +33,7 @@ mkdir chrome-extension
 mkdir firebase-project
 ```
 
-## Step 2: Set up the Firebase Project
+### Step 2: Set up the Firebase Project
 **a)** Go to the Firebase Console.
 **b)** Click "Add project" and follow the steps to create a new project.
 **c)** Once created, click on "Web" to add a web app to your project.
@@ -49,10 +49,8 @@ const firebaseConfig = {
   appId: "example"
 };
 ```
-**f)** Navigate to the firebase-project directory
-    `cd firebase-project`
-**g)** Initialize a new npm project
-    `npm init -y`
+**f)** Navigate to the firebase-project directory `cd firebase-project`
+**g)** Initialize a new npm project `npm init -y`
 **h)** Create a public dir `mkdir public`
 **i)** Create an index.html file 
 _firebase-project/public/index.html_
@@ -198,7 +196,7 @@ _chrome-extension/src/public/manifest.json_
     }
   ],
   "oauth2": {
-    "client_id": "YOUR-ID.apps.googleusercontent.com",
+    "client_id": "YOUR-GOOGLE-OAUTH-CLIENT-ID.apps.googleusercontent.com",
     "scopes": [
       "openid", 
       "email", 
@@ -373,7 +371,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 ```
 
-## Step 4: Build and Upload your extension to the Chrome Web Store
+### Step 4: Create an oauth ID in Google console
+**a)** Open the [Google Cloud console](https://console.developers.google.com/apis/credentials) It should open on the Credentials page.
+**b)** Click Create credentials > OAuth client ID.
+**c)** Select the Chrome extension application type.
+**d)** Name your OAuth 2.0 client and click Create. You may have to verify your app ownership.
+**e)** Copy your Google OAUTH Client ID into the manifest.json where it says 'YOUR-GOOGLE-OAUTH-CLIENT-ID'
+
+### Step 5: Build and Upload your extension to the Chrome Web Store
 **a)** Sign up and pay the one time $5 fee if you want to create and publish extensions in the Chrome Web Store (If you don't do this then you won't be able to get a public key or Extension ID which are needed for this tutorial to work and you will only be able to run your chrome extensions locally)
 **b)** Navigate to the Chrome Web Store Developer Dashboard, click on the Items menu option on the left hand side and then click the '+ New item' on the right side of the page
 **c)** Build and zip your extension using the script we created earlier like so: `npm run release`
@@ -383,22 +388,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 **d)** Upload your Dist.zip file to the Chrome Web Store after clicking the new item button
 **e)** Now you'll have a draft listing, you can fill in the info and save draft or complete it later.
 **f)** You can find your Extension ID at the top of the page on the left side and to get your Public key, click on Package in the menu on the left and then click 'View public key'
-**g)** Copy your Extension ID into the manifest.json where it says 'YOUR-ID' and copy your public key in between the -----BEGIN PUBLIC KEY----- and -----END PUBLIC KEY----- lines into your manifest where it says 'YOURPUBLICKEY' make sure it's between the two '/n' statements
+**g)**  Copy your public key in between the -----BEGIN PUBLIC KEY----- and -----END PUBLIC KEY----- lines into your manifest where it says 'YOURPUBLICKEY' make sure it's between the two '/n' statements
 
-## Step 5: Configure Firebase Authentication
+### Step 6: Configure Firebase Authentication
 **a)** In the Firebase Console, go to Authentication > Sign-in method.
 **b)** Enable Google as a sign-in provider.
-**c)** Add your Chrome extension's ID to the authorized domains list:
+**c)** Add your Chrome extension's ID ( Step 5 -> f) ) to the authorized domains list:
 The format is: chrome-extension://YOUR_EXTENSION_ID
 
-## Step 6: Load and Test the Extension
+### Step 7: Load and Test the Extension
 **a)** Open Google Chrome and go to chrome://extensions/.
 **b)** Enable "Developer mode" in the top right corner.
 **c)** Click "Load unpacked" and select your chrome-extension directory.
 **d)** Click on the extension icon in Chrome's toolbar to open the popup.
 **e)** Click the "Sign In" button and test the authentication flow.
 
-## Troubleshooting
+### Troubleshooting
 
 If you encounter CORS issues, ensure your Firebase hosting URL is correctly set in both background.js and offscreen.js.
 
@@ -406,7 +411,7 @@ Make sure your Chrome extension's ID is correctly added to Firebase's authorized
 
 Check the console logs in the popup, background script, and offscreen document for any error messages.
 
-## Conclusion
+### Conclusion
 
 You now have a Chrome extension that uses Firebase Authentication with an offscreen document to handle the sign-in process. This setup allows for secure authentication without exposing sensitive Firebase configuration details directly in the extension code.
 

@@ -25,7 +25,7 @@
     }
   ],
   "oauth2": {
-    "client_id": "YOUR-ID.apps.googleusercontent.com",
+    "client_id": "YOUR-GOOGLE-OAUTH-CLIENT-ID.apps.googleusercontent.com",
     "scopes": [
       "openid", 
       "email", 
