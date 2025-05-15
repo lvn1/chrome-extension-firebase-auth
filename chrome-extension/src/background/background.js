@@ -43,8 +43,27 @@ async function captureScreenshot() {
         // Get the active tab
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         
-        // Capture the visible area of the tab
-        const screenshot = await chrome.tabs.captureVisibleTab(null, { format: 'png' });
+        if (!tab) {
+            throw new Error('No active tab found');
+        }
+
+        // Capture the visible area of the tab with specific quality settings
+        const screenshot = await chrome.tabs.captureVisibleTab(null, {
+            format: 'png',
+            quality: 100
+        });
+
+        // Verify that we got a valid data URL
+        if (!screenshot || !screenshot.startsWith('data:image/png;base64,')) {
+            throw new Error('Invalid screenshot format');
+        }
+
+        // Verify the data URL contains actual image data
+        const base64Data = screenshot.split(',')[1];
+        if (!base64Data || base64Data.length < 100) {  // Basic sanity check
+            throw new Error('Screenshot data is too small or empty');
+        }
+
         return screenshot;
     } catch (error) {
         console.error('Error capturing screenshot:', error);
@@ -60,9 +79,34 @@ async function uploadScreenshot(screenshotDataUrl) {
             throw new Error('User not authenticated');
         }
 
-        // Convert data URL to blob
-        const response = await fetch(screenshotDataUrl);
-        const blob = await response.blob();
+        // Validate the data URL
+        if (!screenshotDataUrl || !screenshotDataUrl.startsWith('data:image/png;base64,')) {
+            throw new Error('Invalid screenshot format');
+        }
+
+        // Convert data URL to blob more carefully
+        const base64Data = screenshotDataUrl.split(',')[1];
+        const byteCharacters = atob(base64Data);
+        const byteArrays = [];
+
+        for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+            const slice = byteCharacters.slice(offset, offset + 512);
+            const byteNumbers = new Array(slice.length);
+            
+            for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+            
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+
+        const blob = new Blob(byteArrays, { type: 'image/png' });
+
+        // Verify blob size
+        if (blob.size < 100) {  // Basic sanity check
+            throw new Error('Generated blob is too small');
+        }
 
         // Generate timestamp for unique filename
         const timestamp = new Date().toISOString();
@@ -105,15 +149,34 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             });
         return true; // Indicates we will send a response asynchronously
     } else if (message.action === 'signOut') {
-        chrome.storage.local.remove('user', () => {
-            sendResponse();
-        });
+        // Clear both local storage and offscreen cache
+        Promise.all([
+            new Promise(resolve => chrome.storage.local.remove('user', resolve)),
+            new Promise(resolve => 
+                chrome.runtime.sendMessage(
+                    {action: 'clearAuth', target: 'offscreen'},
+                    () => resolve()
+                )
+            )
+        ]).then(() => sendResponse());
         return true;
     } else if (message.action === 'takeScreenshot') {
         captureScreenshot()
             .then(screenshot => uploadScreenshot(screenshot))
             .then(url => sendResponse({ success: true, url: url }))
-            .catch(error => sendResponse({ success: false, error: error.message }));
+            .catch(error => {
+                console.error('Screenshot error:', error);
+                // If not authenticated, send specific error
+                if (error.message === 'User not authenticated') {
+                    sendResponse({ 
+                        success: false, 
+                        error: 'Please sign in again to take screenshots',
+                        requiresAuth: true 
+                    });
+                } else {
+                    sendResponse({ success: false, error: error.message });
+                }
+            });
         return true;
     }
 });

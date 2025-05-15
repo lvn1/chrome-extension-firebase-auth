@@ -62,7 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 showStatus('Screenshot uploaded successfully!');
                 console.log('Screenshot URL:', response.url);
             } else {
-                showStatus('Failed to take screenshot: ' + response.error, true);
+                if (response.requiresAuth) {
+                    // If auth is required, trigger sign in
+                    chrome.runtime.sendMessage({action: 'signIn'}, (signInResponse) => {
+                        if (signInResponse.error) {
+                            showStatus('Sign in failed: ' + signInResponse.error, true);
+                        } else {
+                            updateUI(signInResponse.user);
+                            showStatus('Please try taking the screenshot again');
+                        }
+                    });
+                } else {
+                    showStatus('Failed to take screenshot: ' + response.error, true);
+                }
             }
         });
     });
