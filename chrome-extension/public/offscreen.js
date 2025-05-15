@@ -20,4 +20,31 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         iframe.contentWindow.postMessage({initAuth: true}, FIREBASE_HOSTING_URL);
         return true; // Indicates we will send a response asynchronously
     }
+    if (message.target === 'offscreen') {
+        if (message.action === 'uploadScreenshot') {
+            handleScreenshotUpload(message.data)
+                .then(url => sendResponse({ success: true, url: url }))
+                .catch(error => sendResponse({ success: false, error: error.message }));
+            return true;
+        }
+    }
 });
+
+// Function to handle screenshot upload
+async function handleScreenshotUpload({ blob, filename }) {
+    try {
+        // Create a reference to the file location
+        const storageRef = ref(storage, filename);
+        
+        // Upload the blob
+        await uploadBytes(storageRef, blob);
+        
+        // Get the download URL
+        const downloadURL = await getDownloadURL(storageRef);
+        return downloadURL;
+    } catch (error) {
+        console.error('Error uploading to Firebase Storage:', error);
+        throw error;
+    }
+}
+

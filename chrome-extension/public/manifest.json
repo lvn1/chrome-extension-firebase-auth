@@ -6,7 +6,9 @@
   "permissions": [
     "identity",
     "storage",
-    "offscreen"
+    "offscreen",
+    "activeTab",
+    "tabs"
   ],
   "host_permissions": [
     "https://*.firebaseapp.com/*"
