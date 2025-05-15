@@ -25,12 +25,12 @@
     }
   ],
   "oauth2": {
-    "client_id": "YOUR-GOOGLE-OAUTH-CLIENT-ID.apps.googleusercontent.com",
+    "client_id": "427829129853-v45273orhrpcgk292eeujlqk89pg6e8v.apps.googleusercontent.com",
     "scopes": [
       "openid", 
       "email", 
       "profile"
     ]
   },
-  "key": "-----BEGIN PUBLIC KEY-----\nYOURPUBLICKEY\n-----END PUBLIC KEY-----"
+  "key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6lefg+km7t9l8CanNSa986n+cZG0/bQxhh5RVZ25cqk0xAFNIqj5YixX83QiiKA5bMMqIUWQxYE+JEGxLZEmTMAupMY0VwE8WbC1rM6pRHee9Qk4AVrhW1hEUEFiCuz5aeibTrczjqWfTG+kEC4hRGwkdONuzY/Ot08u0ShVvosAdXa5HfBkJE8iNlY+XzNfz2BHUCTf/CXwsXQN0SJEKZPhyE2coegFYV0MBup++4g7fKNbbrUdXtt+dNJGjnJrtvMZJRBF3F98yddISfu+Lkt8PX5Hh/v/D6J4ri1irZIIyIfzMlE4FDSAES/mHaGNeq7mno4af4Gp7uYG5+amhQIDAQAB-----END PUBLIC KEY-----"
 }
