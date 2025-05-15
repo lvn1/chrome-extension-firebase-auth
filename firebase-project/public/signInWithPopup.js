@@ -2,8 +2,13 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
-  // Your web app's Firebase configuration
-  // Replace with the config you copied from Firebase Console
+  apiKey: "AIzaSyDUnp1zjqoB5hc-3c4f9m289TtEQaI39EU",
+  authDomain: "testvorgan.firebaseapp.com",
+  projectId: "testvorgan",
+  storageBucket: "testvorgan.firebasestorage.app",
+  messagingSenderId: "521105889239",
+  appId: "1:521105889239:web:33cbc3bf4e845444a75d92",
+  measurementId: "G-V26T8W2SBL"
 };
 
 const app = initializeApp(firebaseConfig);
