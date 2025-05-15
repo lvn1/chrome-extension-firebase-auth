@@ -8,6 +8,7 @@ module.exports = {
     popup: './src/popup/popup.js',
   },
   mode: 'development',
+  devtool: "cheap-module-source-map",
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),

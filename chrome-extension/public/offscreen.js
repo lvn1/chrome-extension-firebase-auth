@@ -1,4 +1,4 @@
-const FIREBASE_HOSTING_URL = 'https://your-project-id.web.app'; // Replace with your Firebase hosting URL
+const FIREBASE_HOSTING_URL = 'https://testvorgan.web.app/'; // Replace with your Firebase hosting URL
 
 const iframe = document.createElement('iframe');
 iframe.src = FIREBASE_HOSTING_URL;

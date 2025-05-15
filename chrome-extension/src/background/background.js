@@ -1,5 +1,5 @@
 const OFFSCREEN_DOCUMENT_PATH = 'offscreen.html';
-const FIREBASE_HOSTING_URL = 'https://your-project-id.web.app'; // Replace with your Firebase hosting URL
+const FIREBASE_HOSTING_URL = 'https://testvorgan.web.app/'; // Replace with your Firebase hosting URL
 
 let creatingOffscreenDocument;
 
