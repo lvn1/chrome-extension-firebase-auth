@@ -3,14 +3,16 @@ const FIREBASE_HOSTING_URL = 'https://your-project-id.web.app'; // Replace with 
 const iframe = document.createElement('iframe');
 iframe.src = FIREBASE_HOSTING_URL;
 document.body.appendChild(iframe);
+console.log("OFFSCREEN BOOTSTRAP: Script is running!");
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'getAuth' && message.target === 'offscreen') {
         function handleIframeMessage({data}) {
             try {
                 const parsedData = JSON.parse(data);
+                console.log('Parsed data from iframe: ', parsedData.success);
                 window.removeEventListener('message', handleIframeMessage);
-                sendResponse(parsedData.user);
+                sendResponse(parsedData);
             } catch (e) {
                 console.error('Error parsing iframe message:', e);
             }

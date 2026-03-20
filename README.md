@@ -420,3 +420,22 @@ Remember to replace placeholder values (like YOUR_EXTENSION_ID, YOUR-CLIENT-ID, 
 If you found this guide helpful please give us a star and follow us on Dev.to for more guides
 [Dev.to](https://dev.to/lvn1)
 
+### Additonal details:
+
+**1** manifest.json
+   content_security_policy must also have "app hosting url" for connect-src and frame-src both
+   host permissions also need app hosting url
+
+**2** background.js
+   following is added to chrome.runtime.onMessage.addListener method
+       if (message.target === 'offscreen') return false;
+
+**3** signInWithPopup.js
+   complete urls are needed 
+   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js';
+    import { getAuth, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js';
+
+**4** Security BrowserKey should have following to ensure maximum security without blocking app usage
+   1) chrome-extension://YOUR-EXTENSION-ID/*
+   2) https://your-project-id.web.app
+   3) https://your-project-id.firebaseapp.com

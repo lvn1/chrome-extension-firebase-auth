@@ -9,7 +9,12 @@
     "offscreen"
   ],
   "host_permissions": [
-    "https://*.firebaseapp.com/*"
+    "https://your-project-id.web.app/*",
+    "https://*.firebaseapp.com/*",
+    "https://accounts.google.com/*",
+    "https://securetoken.googleapis.com/*",
+    "https://www.googleapis.com/*",
+    "https://www.gstatic.com/*"
   ],
   "background": {
     "service_worker": "background.js",
@@ -24,6 +29,9 @@
       "matches": ["<all_urls>"]
     }
   ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://firestore.googleapis.com https://your-project-id.web.app/* https://securetoken.googleapis.com https://www.googleapis.com https://identitytoolkit.googleapis.com; frame-src 'self' https://accounts.google.com https://your-project-id.web.app;"
+  },
   "oauth2": {
     "client_id": "YOUR-GOOGLE-OAUTH-CLIENT-ID.apps.googleusercontent.com",
     "scopes": [
